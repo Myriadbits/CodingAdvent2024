@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "CodingAdvent2024": {
+      "commandName": "Project"
+    },
+    "TestCodingAdvent2024": {
+      "commandName": "Project",
+      "commandLineArgs": "--test"
+    }
+  }
+}
