@@ -18,13 +18,13 @@ namespace CodingAdvent
             string line = lines[0].Trim();
 
             // Get all files
-            LinkedList<long> fileBlocks = new LinkedList<long>();
+            List<long> fileBlocks = new List<long>();
             long id = 0;
             for(int i = 0; i < line.Length; i += 2)
             {
                 int numTimes = int.Parse(line.Substring(i, 1));
                 for (int cnt = 0; cnt < numTimes; cnt++)
-                    fileBlocks.AddLast(id);
+                    fileBlocks.Add(id);
                 id++;
             }
             //Log($"{string.Join(",", fileBlocks)}");
@@ -34,23 +34,24 @@ namespace CodingAdvent
             long index = 0;
             long idQueue = 0;
             int idx = 0;
-            while (fileBlocks.Count > 0)
+            int startIdx = 0;
+            int endIdx = fileBlocks.Count - 1;
+            while (startIdx <= endIdx)
             {
                 int numTimes = int.Parse(line.Substring(idx, 1));
                 for (int cnt = 0; cnt < numTimes; cnt++)
                 {
-                    if (fileBlocks.Count == 0)
+                    if (startIdx > endIdx)
                         break;
-
                     if (idx % 2 == 0)
                     {
-                        idQueue = fileBlocks.First();
-                        fileBlocks.RemoveFirst();
+                        idQueue = fileBlocks[startIdx];
+                        startIdx++;
                     }
                     else
                     {
-                        idQueue = fileBlocks.Last();
-                        fileBlocks.RemoveLast();
+                        idQueue = fileBlocks[endIdx];
+                        endIdx--;
                     }
                     allBlocks.Add(idQueue);
                     biSum += index * idQueue;
@@ -63,7 +64,7 @@ namespace CodingAdvent
             // 6311986840296 <= too high
             // 6310675819476 <= Good!
 
-            Log($"{string.Join(",", allBlocks)}");
+            //Log($"{string.Join(",", allBlocks)}");
 
             LogAnswer(1, $"{biSum}");
         }
@@ -123,7 +124,7 @@ namespace CodingAdvent
 
                 pos += map[i];
             }
-            Log($"{string.Join(",", output)}");
+            //Log($"{string.Join(",", output)}");
 
             files.Reverse();
 
@@ -155,7 +156,7 @@ namespace CodingAdvent
                     }
                 }
             }
-            Log($"{string.Join(",", output)}");
+            //Log($"{string.Join(",", output)}");
 
             BigInteger biSum = new BigInteger(0);            
             foreach (FakeFile f in files)

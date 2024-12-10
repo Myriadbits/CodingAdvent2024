@@ -130,6 +130,8 @@ namespace CodingAdvent
                             }
 
                             resultString += numbers[j + 1].ToString();
+                            if (result > expectedResult)
+                                break;
                         }
                         if (result == expectedResult)
                         {

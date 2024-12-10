@@ -114,7 +114,7 @@ namespace CodingAdvent
         {
             foreach (var item in data)
             {
-                Console.WriteLine($"[{DayNumber}-{m_subNumber}] {new string(item)}");                
+               Log($"[{DayNumber}-{m_subNumber}] {new string(item)}");                
             }
         }
 

@@ -4,6 +4,8 @@ namespace CodingAdvent
 {
     internal class Day10 : DayBase
     {
+        private long m_resultAssignment2 = 0;
+
         public Day10()
             : base(10)
         {
@@ -66,15 +68,13 @@ namespace CodingAdvent
         {
             // Find the trails
             (long, long) result = CombinedAssignment();
+            m_resultAssignment2 = result.Item2;
             LogAnswer(1, $"{result.Item1}");
         }
-
       
         public override void Assignment2()
         {
-            // Find the trails
-            (long, long) result = CombinedAssignment();
-            LogAnswer(2, $"{result.Item2}");
+            LogAnswer(2, $"{m_resultAssignment2}");
         }
     }
 }

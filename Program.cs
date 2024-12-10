@@ -31,11 +31,9 @@
             //foreach (DayBase d in allDays)
             //    d.ExecuteNoLog(doTest);
 
-
-            //DayBase day = allDays[18];
+            //DayBase day = allDays[6];
             DayBase day = allDays.Last();
-            day.Execute(doTest);
-            //day.Assignment2();
+            day.Execute(doTest); 
         }
     }
 }
