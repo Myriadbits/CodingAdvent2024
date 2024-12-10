@@ -73,6 +73,22 @@ namespace CodingAdvent
         }
 
         /// <summary>
+        /// Returns true if a position contains a value
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="ch"></param>
+        public bool IsPositionValue(Position pos, char ch)
+        {
+            if (pos.X >= 0 && pos.X < this.SizeX &&
+                pos.Y >= 0 && pos.Y < this.SizeY)
+            {
+                return m_data[pos.Y][pos.X] == ch;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Set a character in the map and check the boundaries
         /// </summary>
         /// <param name="x"></param>
