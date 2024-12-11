@@ -103,7 +103,6 @@ namespace CodingAdvent
                 {
                     int[] numbers = line.Split(',').Select(a => int.Parse(a)).ToArray();
                     // Check numbers against rules
-                    bool valid = true;
                     for (int i = 0; i < numbers.Length; i++)
                     {
                         if (breakrules.ContainsKey(numbers[i]))
