@@ -2,8 +2,6 @@
 {
     internal class Day8 : DayBase
     {
-        char[][] m_outputsA1;
-
         public Day8()
             : base(8)
         {
@@ -12,8 +10,6 @@
         public override void Assignment1()
         {
             // Find the antinodes in the map
-            long sum = 0;
-
             Map2D mapIn = new Map2D(m_filePath);
             Map2D mapOut = new Map2D(mapIn.SizeX, mapIn.SizeY); // Creat an empty map
 
@@ -52,8 +48,6 @@
         public override void Assignment2()
         {
             // Find the antinodes in the map when repeating
-            long sum = 0;
-
             Map2D mapIn = new Map2D(m_filePath);
             Map2D mapOut = new Map2D(mapIn.SizeX, mapIn.SizeY); // Creat an empty map
 

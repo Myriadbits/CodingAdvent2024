@@ -15,8 +15,6 @@ namespace CodingAdvent
 {
     internal class Day7 : DayBase
     {
-        char[][] m_outputsA1;
-
         public Day7()
             : base(7)
         {
