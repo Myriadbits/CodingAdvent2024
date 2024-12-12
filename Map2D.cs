@@ -89,6 +89,16 @@ namespace CodingAdvent
         }
 
         /// <summary>
+        /// Returns true if a position is in the bounds
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public bool IsInBounds(int x, int y)
+        {
+            return (x >= 0 && x < this.SizeX && y >= 0 && y < this.SizeY);
+        }
+
+        /// <summary>
         /// Set a character in the map and check the boundaries
         /// </summary>
         /// <param name="x"></param>
@@ -117,7 +127,7 @@ namespace CodingAdvent
             if (x >= 0 && x < this.SizeX &&
                 y >= 0 && y < this.SizeY)
             {
-                if (input.Data[y][x] == emptyChar)
+                if (input.m_data[y][x] == emptyChar)
                 {
                     m_data[y][x] = ch;
                 }
@@ -152,6 +162,208 @@ namespace CodingAdvent
                 }
             }
             return count;
+        }
+
+        /// <summary>
+        /// Determine the cicumfence of an area
+        /// It is a circumfence if it is on the outside, or the pixel next to it is another value
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public long GetCircumfence(int x, int y)
+        {
+            long circumfence = 0;
+            if (x == 0) circumfence++;
+            if (y == 0) circumfence++;
+            if (x == SizeX - 1) circumfence++;
+            if (y == SizeY - 1) circumfence++;
+
+            if (x > 0 && m_data[y][x] != m_data[y][x - 1]) circumfence++;
+            if (y > 0 && m_data[y][x] != m_data[y - 1][x]) circumfence++;
+            if (x < SizeX - 1 && m_data[y][x] != m_data[y][x + 1]) circumfence++;
+            if (y < SizeY - 1 && m_data[y][x] != m_data[y + 1][x]) circumfence++;
+            return circumfence;
+        }
+
+        /// <summary>
+        /// Check if 2 adjacent pixels are the different
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="dir">BITFIELDS</param>
+        /// <returns></returns>
+        public bool IsAdjacentDiff(int x, int y, EDirection dir)
+        {
+            bool ret = true;
+            if ((dir & EDirection.North) != 0)
+                ret = ret && (y == 0 || m_data[y][x] != m_data[y - 1][x]);
+            if ((dir & EDirection.East) != 0)
+                ret = ret && (x == (SizeX - 1) || m_data[y][x] != m_data[y][x + 1]);
+            if ((dir & EDirection.South) != 0)
+                ret = ret && (y == (SizeY - 1) || m_data[y][x] != m_data[y + 1][x]);
+            if ((dir & EDirection.West) != 0)
+                ret = ret && (x == 0 || m_data[y][x] != m_data[y][x - 1]);
+            return ret;
+        }
+
+        /// <summary>
+        /// Check if 2 adjacent pixels are the same
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="dir">BITFIELDS</param>
+        /// <returns></returns>
+        public bool IsAdjacentSame(int x, int y, EDirection dir)
+        {
+            bool ret = true;
+            if ((dir & EDirection.North) != 0)
+                ret = ret && (y > 0 && m_data[y][x] == m_data[y - 1][x]);
+            if ((dir & EDirection.East) != 0)
+                ret = ret && (x < (SizeX - 1) && m_data[y][x] == m_data[y][x + 1]);
+            if ((dir & EDirection.South) != 0)
+                ret = ret && (y < (SizeY - 1) && m_data[y][x] == m_data[y + 1][x]);
+            if ((dir & EDirection.West) != 0)
+                ret = ret && (x > 0 && m_data[y][x] == m_data[y][x - 1]);
+            return ret;
+        }
+
+        /// <summary>
+        /// Returns true if a diagonal is different
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="dir"></param>
+        /// <returns></returns>
+        public bool IsDiagDiff(int x, int y, EDirection dir)
+        {
+            if (dir == EDirection.NorthEast)
+                return (x < SizeX - 1 && y > 0 && m_data[y][x] != m_data[y - 1][x + 1]);
+            if (dir == EDirection.SouthEast)
+                return (x < SizeX - 1 && y < SizeY - 1 && m_data[y][x] != m_data[y + 1][x + 1]);
+            if (dir == EDirection.SouthWest)
+                return (x > 0 && y < SizeY - 1 && m_data[y][x] != m_data[y + 1][x - 1]);
+            if (dir == EDirection.NorthWest)
+                return (x > 0 && y > 0 && m_data[y][x] != m_data[y - 1][x - 1]);
+            return false;
+        }
+
+        /// <summary>
+        /// Return true if the pixel is a corner
+        /// Corners are at the corner of the image,
+        /// or when the up/left, up/right, down/right or down/left are not equal.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public int CountCorners(int x, int y)
+        {
+            int corners = 0;
+
+            // Count outside corners
+            if (IsAdjacentDiff(x, y, EDirection.NorthEast)) corners++;
+            if (IsAdjacentDiff(x, y, EDirection.SouthEast)) corners++;
+            if (IsAdjacentDiff(x, y, EDirection.SouthWest)) corners++;
+            if (IsAdjacentDiff(x, y, EDirection.NorthWest)) corners++;
+
+            // Count inner corners
+            if (IsAdjacentSame(x, y, EDirection.NorthEast) && IsDiagDiff(x, y, EDirection.NorthEast)) corners++;
+            if (IsAdjacentSame(x, y, EDirection.SouthEast) && IsDiagDiff(x, y, EDirection.SouthEast)) corners++;
+            if (IsAdjacentSame(x, y, EDirection.SouthWest) && IsDiagDiff(x, y, EDirection.SouthWest)) corners++;
+            if (IsAdjacentSame(x, y, EDirection.NorthWest) && IsDiagDiff(x, y, EDirection.NorthWest)) corners++;
+
+            return corners;
+        }
+
+        /// <summary>
+        /// Fast floodfill an area
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="fillChar"></param>
+        /// <param name="visitedValue"></param>
+        /// <returns>(area, circumfence)</returns>
+        public (long area, long circumfence, long corners) FloodFillFast(int x, int y, char fillChar, Map2D originalMap, char visitedValue = '-')
+        {
+            Stack<Position> pixels = new Stack<Position>();
+
+            pixels.Push(new Position(x, y));
+            long area = 0;
+            long circumfence = 0;
+            long corners = 0;
+            while (pixels.Count > 0)
+            {
+                // Go right
+                Position pos = pixels.Pop();
+                int previousUp = 1;
+                int previousDown = 1;
+                for (int x1 = pos.X; x1 < SizeX; x1++)
+                {
+                    if (m_data[pos.Y][x1] == fillChar)
+                    {
+                        m_data[pos.Y][x1] = visitedValue;
+                        area++;
+                        circumfence += originalMap.GetCircumfence(x1, pos.Y);
+                        corners += originalMap.CountCorners(x1, pos.Y);
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    if (pos.Y > 0)
+                    {
+                        if (previousUp != 0 && m_data[pos.Y - 1][x1] == fillChar)
+                        {
+                            pixels.Push(new Position(x1, pos.Y - 1));
+                        }
+                        previousUp = m_data[pos.Y - 1][x1];
+                    }
+
+                    if (pos.Y < SizeY - 1)
+                    {
+                        if (previousDown != 0 && m_data[pos.Y + 1][x1] == fillChar)
+                        {
+                            pixels.Push(new Position(x1, pos.Y + 1));
+                        }
+                        previousDown = m_data[pos.Y + 1][x1];
+                    }
+                }
+
+                for (int x1 = pos.X - 1; x1 >= 0; x1--)
+                {
+                    if (m_data[pos.Y][x1] == fillChar)
+                    {
+                        m_data[pos.Y][x1] = visitedValue;
+                        area++;
+                        circumfence += originalMap.GetCircumfence(x1, pos.Y);
+                        corners += originalMap.CountCorners(x1, pos.Y);
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    if (pos.Y > 0)
+                    {
+                        if (previousUp != 0 && m_data[pos.Y - 1][x1] == fillChar)
+                        {
+                            pixels.Push(new Position(x1, pos.Y - 1));
+                        }
+                        previousUp = m_data[pos.Y - 1][x1];
+                    }
+
+                    if (pos.Y < SizeY - 1)
+                    {
+                        if (previousDown != 0 && m_data[pos.Y + 1][x1] == fillChar)
+                        {
+                            pixels.Push(new Position(x1, pos.Y + 1));
+                        }
+                        previousDown = m_data[pos.Y + 1][x1];
+                    }
+                }
+            }
+            return (area, circumfence, corners);
         }
     }
 }

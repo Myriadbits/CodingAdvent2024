@@ -13,6 +13,11 @@ namespace CodingAdvent
         East = 0x02,
         South = 0x04,
         West = 0x08,
+
+        NorthEast = 0x03,
+        SouthEast = 0x06,
+        SouthWest = 0x0C,
+        NorthWest = 0x09
     };
 
     public class PositionTracker : Position
