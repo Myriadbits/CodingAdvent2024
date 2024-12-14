@@ -33,11 +33,7 @@ namespace CodingAdvent
             this.SizeX = sizeX;
             this.SizeY = sizeY;
             m_data = new char[this.SizeY][];
-            for (int y = 0; y < this.SizeY; y++)
-            {
-                m_data[y] = new char[this.SizeX];
-                Array.Fill(m_data[y], defaultChar);
-            }
+            Clear(defaultChar);
         }
 
         /// <summary>
@@ -57,6 +53,19 @@ namespace CodingAdvent
                 {
                     m_data[y][x] = lines[y][x];
                 }
+            }
+        }
+
+        /// <summary>
+        /// Clear the map
+        /// </summary>
+        /// <param name="defaultChar"></param>
+        public void Clear(char defaultChar = '.')
+        {
+            for (int y = 0; y < this.SizeY; y++)
+            {
+                m_data[y] = new char[this.SizeX];
+                Array.Fill(m_data[y], defaultChar);
             }
         }
 
@@ -101,6 +110,16 @@ namespace CodingAdvent
         /// <summary>
         /// Set a character in the map and check the boundaries
         /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="ch"></param>
+        public bool SetInBounds(Position pos, char ch)
+        {
+            return SetInBounds(pos.X, pos.Y, ch);
+        }
+
+        /// <summary>
+        /// Set a character in the map and check the boundaries
+        /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="ch"></param>
@@ -133,6 +152,7 @@ namespace CodingAdvent
                 }
             }
         }
+
 
         /// <summary>
         /// Print the map to the console

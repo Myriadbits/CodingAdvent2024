@@ -67,7 +67,7 @@ namespace CodingAdvent
                 }
             }
             // Good answer: 94955433618919
-            LogAnswer(1, $"{sum}");
+            LogAnswer(2, $"{sum}");
         }
     }
 }
