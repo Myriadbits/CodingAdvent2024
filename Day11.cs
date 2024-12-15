@@ -1,11 +1,6 @@
-﻿using System;
-using System.Diagnostics.Metrics;
-using System.Drawing;
-using System.Numerics;
-using System.Reflection;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using AdventOfCodeHelpers;
 
-namespace CodingAdvent
+namespace CodingAdvent2024
 {
     internal class Day11 : DayBase
     {

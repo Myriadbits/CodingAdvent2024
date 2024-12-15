@@ -1,6 +1,6 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using AdventOfCodeHelpers;
 
-namespace CodingAdvent
+namespace CodingAdvent2024
 {
     internal class Day12 : DayBase
     {

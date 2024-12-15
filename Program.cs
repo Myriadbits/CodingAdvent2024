@@ -1,9 +1,15 @@
-﻿namespace CodingAdvent
+﻿using AdventOfCodeHelpers;
+using System.Diagnostics;
+using System.Security.Cryptography;
+
+namespace CodingAdvent2024
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             bool doTest = false;
             if (args.Length > 0)
             {
@@ -28,12 +34,16 @@
 
 
             // Execute all tests
-            //foreach (DayBase d in allDays)
-            //    d.ExecuteNoLog(doTest);
+            foreach (DayBase d in allDays)
+                d.ExecuteNoLog(doTest);
+
 
             //DayBase day = allDays[6];
-            DayBase day = allDays.Last();
-            day.Execute(doTest); 
+            //DayBase day = allDays.Last();
+            //day.Execute(doTest); 
+
+            Console.WriteLine();
+            Console.WriteLine($"Executed {allDays.Count} test in {stopwatch.ElapsedMilliseconds} ms");
         }
     }
 }

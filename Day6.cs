@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using AdventOfCodeHelpers;
 
-namespace CodingAdvent
+namespace CodingAdvent2024
 {
     internal class Day6 : DayBase
     {
-        char[][] m_outputsA1;
+        char[][]? m_outputsA1 = null;
 
         public Day6()
             : base(6)
@@ -121,7 +112,7 @@ namespace CodingAdvent
                     {
                         // Skip guard start pos
                     }
-                    else if (m_outputsA1[y1][x1] == 'X') // Valid positions are only those that are visited by the guard in part 1
+                    else if (m_outputsA1 != null && m_outputsA1[y1][x1] == 'X') // Valid positions are only those that are visited by the guard in part 1
                     {
                         // Add a new turning point
                         orgInput[y1][x1] = '#'; // Add extra obstacle

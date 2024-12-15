@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
+using AdventOfCodeHelpers;
 
-namespace CodingAdvent
+namespace CodingAdvent2024
 {
     internal class Day9 : DayBase
     {

@@ -1,4 +1,6 @@
-﻿namespace CodingAdvent
+﻿using AdventOfCodeHelpers;
+
+namespace CodingAdvent2024
 {
     internal class Day8 : DayBase
     {

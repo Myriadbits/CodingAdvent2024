@@ -1,8 +1,7 @@
-﻿using CodingAdvent2024;
-using System.Text.RegularExpressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System.Text.RegularExpressions;
+using AdventOfCodeHelpers;
 
-namespace CodingAdvent
+namespace CodingAdvent2024
 {
     internal class Day14 : DayBase
     {
@@ -132,7 +131,7 @@ namespace CodingAdvent
                         map.SetInBounds(x, y, 'X');
                     }
 
-                    map.Print(14, 1);
+                    Log2DMap(map);
                     LogAnswer(2, $"{j}");
                     break;
                 }
