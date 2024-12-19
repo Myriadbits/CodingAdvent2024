@@ -2,9 +2,9 @@
 
 namespace CodingAdvent2024
 {
-    internal class Day8 : DayBase
+    internal class Day08 : DayBase
     {
-        public Day8()
+        public Day08()
             : base(8)
         {
         }

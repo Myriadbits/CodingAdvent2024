@@ -34,14 +34,14 @@ namespace CodingAdvent2024
 
 
             // Execute all tests
-            //foreach (DayBase d in allDays)
-            //    d.ExecuteNoLog(doTest);
+            foreach (DayBase d in allDays)
+                d.ExecuteNoLog(doTest);
 
 
             //DayBase day = allDays[6];
 
-            DayBase day = allDays.Last();
-            day.Execute(doTest); 
+            //DayBase day = allDays.Last();
+            //day.Execute(doTest); 
 
             Console.WriteLine();
             Console.WriteLine($"Executed {allDays.Count} test in {stopwatch.ElapsedMilliseconds} ms");

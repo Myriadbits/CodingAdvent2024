@@ -2,11 +2,11 @@
 
 namespace CodingAdvent2024
 {
-    internal class Day6 : DayBase
+    internal class Day06 : DayBase
     {
         char[][]? m_outputsA1 = null;
 
-        public Day6()
+        public Day06()
             : base(6)
         {
         }

@@ -3,9 +3,9 @@ using AdventOfCodeHelpers;
 
 namespace CodingAdvent2024
 {
-    internal class Day1 : DayBase
+    internal class Day01 : DayBase
     {
-        public Day1()
+        public Day01()
             : base(1)
         {
         }
