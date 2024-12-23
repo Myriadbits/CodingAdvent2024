@@ -150,6 +150,7 @@ namespace CodingAdvent2024
 
         public override void Assignment1()
         {
+            // Keypad Conundrum (2 robots)
             long sum = 0;
 
             List<string> lines = System.IO.File.ReadLines(m_filePath).ToList();
@@ -170,23 +171,19 @@ namespace CodingAdvent2024
                 }
                 Log($"Moves: {keypadmoves}");
 
-                string akeypadmoves = "A" + keypadmoves;
-                string cursor1moves = "";
-                for (int n = 0; n < akeypadmoves.Length - 1; n++)
+                string cursormoves = "A" + keypadmoves;
+                for (int robotTimes = 0; robotTimes < 2; robotTimes++)
                 {
-                    cursor1moves += Arrows(akeypadmoves[n], akeypadmoves[n + 1]);
+                    string cursor2moves = "";
+                    for (int n = 0; n < cursormoves.Length - 1; n++)
+                    {
+                        cursor2moves += Arrows(cursormoves[n], cursormoves[n + 1]);
+                    }
+                    Log($"Robo[{robotTimes}]: {cursormoves} [{cursormoves.Length}]");
+                    cursormoves = "A" + cursor2moves;
                 }
-                Log($"Robo1: {cursor1moves}");
 
-                string acursor1moves = "A" + cursor1moves;
-                string cursor2moves = "";
-                for (int n = 0; n < acursor1moves.Length - 1; n++)
-                {
-                    cursor2moves += Arrows(acursor1moves[n], acursor1moves[n + 1]);
-                }
-                Log($"Robo2: {cursor2moves} [{cursor2moves.Length}]");
-
-                long complexity = cursor2moves.Length * int.Parse(line.Replace("A", ""));
+                long complexity = cursormoves.Length * int.Parse(line.Replace("A", ""));
                 sum += complexity;
                 Log($"==== {complexity} =====");
             }
@@ -200,6 +197,7 @@ namespace CodingAdvent2024
 
         public override void Assignment2()
         {
+            // Keypad Conundrum (25 robots....)
             long sum = 0;
 
             List<string> lines = System.IO.File.ReadLines(m_filePath).ToList();

@@ -13,6 +13,7 @@ namespace CodingAdvent2024
 
         public override void Assignment1()
         {
+            // Monkey Market, calculate the secret numbers
             long sum = 0;
 
             List<long> numbers = ReadNumberPerLine();
@@ -36,6 +37,7 @@ namespace CodingAdvent2024
 
         public override void Assignment2()
         {
+            // Monkey Market. Get the most bananas
             long sum = 0;
 
             List<long> numbers = ReadNumberPerLine();
