@@ -67,8 +67,6 @@ namespace CodingAdvent2024
         public override void Assignment2()
         {
             // LAN Party (find the largest network of interconnected PC's)
-            long sum = 0;
-
             List<string> lines = System.IO.File.ReadLines(m_filePath).ToList();
             Dictionary<string, List<string>> links = new Dictionary<string, List<string>>();
             foreach (string line in lines)

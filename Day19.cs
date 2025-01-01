@@ -125,24 +125,54 @@ namespace CodingAdvent2024
             LogAnswer(1, $"{sum}");
         }
 
-
-        public long CountCombinations(string line, int startIdx, string[] allCombinations)
+        public long CountCombinations(string line, int startIdx, Dictionary<char, List<string>> combos, Dictionary<int, long> foundItems, string output)
         {
             long sum = 0;
-            foreach (string combi in allCombinations)
+            char ch = line[startIdx];
+            foreach (string combi in combos[ch])
             {
-                if (line.IndexOf(combi, startIdx) == startIdx)
+                if ((startIdx + combi.Length) > line.Length)
+                    continue;
+                bool match = true;
+                for (int i = 0; i < combi.Length; i++)
+                {
+                    if (line[i + startIdx] != combi[i])
+                    {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match)
                 {
                     if (startIdx + combi.Length == line.Length)
                     {
                         sum += 1; // It fits, and we reached the end
+                        Log($"Match: {output},{combi} + [{sum}] <");
                     }
                     else
                     {
-                        sum += CountCombinations(line, startIdx + combi.Length, allCombinations);
+                        // It fits, count 
+                        int idx = startIdx + combi.Length;
+                        if (foundItems.ContainsKey(idx))
+                        {
+                            //long newsum = foundItems[idx];
+                            //sum += newsum;
+                            //Log($"Match: {output},{combi} + [{newsum}]");
+                        }
+                        else
+                        {
+                            long newsum = CountCombinations(line, idx, combos, foundItems, output + "," + combi);
+                            if (newsum > 0)
+                            {
+                                sum += newsum;
+                                //foundItems[idx] = newsum;
+                                Log($"Match: {output},{combi} + [{newsum}]");
+                            }
+                        }
                     }
                 }
             }
+            foundItems[startIdx] = sum;
             return sum;
         }
 
@@ -153,20 +183,43 @@ namespace CodingAdvent2024
             List<string> lines = System.IO.File.ReadLines(m_filePath).ToList();
             string[] allCombinations = lines[0].Split(", ");
 
+            // w(1), u(1), b, r(1), g(1)
+            Dictionary<char, List<string>> combos = new Dictionary<char, List<string>>();
+            combos.Add('w', allCombinations.Where(a => a.StartsWith('w')).ToList());
+            combos.Add('u', allCombinations.Where(a => a.StartsWith('u')).ToList());
+            combos.Add('r', allCombinations.Where(a => a.StartsWith('r')).ToList());
+            combos.Add('g', allCombinations.Where(a => a.StartsWith('g')).ToList());
+            combos.Add('b', allCombinations.Where(a => a.StartsWith('b')).ToList());
+
+            //Array.Sort(combinations, delegate (string x, string y) { return y.Count(a => a == ch).CompareTo(x.Count(a => a == ch)); });
+
+            //string line = "grwwbwuwuwwrruwwrrwwbgrgwrggwurguuwwgburwbgwuuru";
+
+
+
             int count = 0;
             long total = 0;
             for (int n = 2; n < lines.Count; n++)
             {
                 string line = lines[n];
-                var data = CountCombinations(line, 0, allCombinations);
+                Log($"--------------");
+                Log($"{n}: {line}");
+                Dictionary<int, long> foundItems = new Dictionary<int, long>();
+                var data = CountCombinations(line, 0, combos, foundItems, "");
                 if (data > 0)
                 {
                     Log($"{n}: {data}");
                     total += data;
                     count++;
                 }
+                else
+                {
+                    Log($"{n}: {data}");
+                }
             }
             // 705 is too low
+            // 1007396318504191 is too high
+            //     600467533368
             LogAnswer(2, $"{total} - {count}");
         }
 

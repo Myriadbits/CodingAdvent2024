@@ -38,9 +38,9 @@ namespace CodingAdvent2024
                 //d.ExecuteNoLog(doTest);
 
 
-            //DayBase day = allDays[21];
+            DayBase day = allDays[19];
 
-            DayBase day = allDays.Last();
+            //DayBase day = allDays.Last();
             day.Execute(doTest); 
 
             Console.WriteLine();
